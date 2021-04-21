@@ -6,6 +6,7 @@
 package Business.Vaccine;
 
 import Business.VaccineManufacturer.VaccineManufacturer;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,9 +22,6 @@ public class VaccineProduct {
         id = count;
         count++;
     }
-    
-    
-    
     
     public enum VaccineType{
         Pfizer("Pfizer"),
@@ -69,10 +67,5 @@ public class VaccineProduct {
     public String toString() {
         return String.valueOf(id);
     }
-
-    
-    
-    
-    
     
 }

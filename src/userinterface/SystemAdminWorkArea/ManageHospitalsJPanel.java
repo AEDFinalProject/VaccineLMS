@@ -10,9 +10,9 @@ import Business.Employee.Employee;
 import Business.Hospital.Hospital;
 import Business.Hospital.HospitalDirectory;
 import Business.Role.AdminRole;
-import Business.Role.HospitalRole;
 import Business.Role.Role;
 import Business.UserAccount.UserAccount;
+import Business.Vaccine.VaccineProduct.VaccineType;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JOptionPane;
@@ -39,6 +39,7 @@ public class ManageHospitalsJPanel extends javax.swing.JPanel {
         this.ecoSystem = ecoSystem;
         populateComboBox();
         populateTable();
+        populateVaccineComboBox();
     }
 
     /**
@@ -72,6 +73,8 @@ public class ManageHospitalsJPanel extends javax.swing.JPanel {
         jPasswordField = new javax.swing.JPasswordField();
         jLabel7 = new javax.swing.JLabel();
         txtHospEmpName = new javax.swing.JTextField();
+        cbxVaccineType = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
 
         hospJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -155,6 +158,10 @@ public class ManageHospitalsJPanel extends javax.swing.JPanel {
 
         jLabel7.setText("Hospital Employee Name:");
 
+        cbxVaccineType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel8.setText("Vaccine Type:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -172,32 +179,6 @@ public class ManageHospitalsJPanel extends javax.swing.JPanel {
                                 .addGap(83, 83, 83)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(174, 174, 174)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel1)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel4)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel6)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(jLabel7)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cbxRoleActionPerformed, 0, 269, Short.MAX_VALUE)
-                                    .addComponent(txtIDField)
-                                    .addComponent(txtHospName)
-                                    .addComponent(txtHospAddress)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtHospUsername)
-                                            .addComponent(jPasswordField)))
-                                    .addComponent(txtHospEmpName)))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(106, 106, 106)
                                 .addComponent(btnCreate)
                                 .addGap(18, 18, 18)
@@ -205,8 +186,44 @@ public class ManageHospitalsJPanel extends javax.swing.JPanel {
                                 .addGap(24, 24, 24)
                                 .addComponent(btnSave)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnDelete)))
-                        .addGap(0, 169, Short.MAX_VALUE)))
+                                .addComponent(btnDelete))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(174, 174, 174)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel1)
+                                        .addComponent(jLabel2))
+                                    .addGap(72, 72, 72)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(cbxRoleActionPerformed, 0, 269, Short.MAX_VALUE)
+                                        .addComponent(txtIDField)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(112, 112, 112)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(64, 64, 64)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel3)
+                                                .addComponent(jLabel4)
+                                                .addComponent(jLabel5)
+                                                .addComponent(jLabel6)))
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(txtHospAddress)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGap(6, 6, 6)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(txtHospUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+                                                        .addComponent(jPasswordField)))
+                                                .addComponent(txtHospEmpName))
+                                            .addGap(0, 0, Short.MAX_VALUE))
+                                        .addComponent(txtHospName)
+                                        .addComponent(cbxVaccineType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addGap(0, 381, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -226,7 +243,11 @@ public class ManageHospitalsJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(txtIDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxVaccineType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtHospName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -246,7 +267,7 @@ public class ManageHospitalsJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreate)
                     .addComponent(btnUpdate)
@@ -262,11 +283,6 @@ public class ManageHospitalsJPanel extends javax.swing.JPanel {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         userProcessContainer.remove(this);
-        Component[] componentArray = userProcessContainer.getComponents();
-        Component component = componentArray[componentArray.length - 1];
-        SystemAdminWorkAreaJPanel sysAdminwjp = (SystemAdminWorkAreaJPanel) component;
-        sysAdminwjp.populateTree();
-
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
@@ -279,13 +295,14 @@ public class ManageHospitalsJPanel extends javax.swing.JPanel {
         String password = jPasswordField.getText();
         String username = txtHospUsername.getText();
         String address = txtHospAddress.getText();
+        String vaccineType = (String) cbxVaccineType.getSelectedItem();
              
           
         Employee employee = ecoSystem.getEmployeeDirectory().createEmployee(hospEmployeeName);
         
         UserAccount ua = ecoSystem.getUserAccountDirectory().createUserAccount(username, password, employee, new AdminRole());
                 
-        Hospital hospital = ecoSystem.getHospitalDirectory().createHospital(hospName, hospEmployeeName, address, ua);
+        Hospital hospital = ecoSystem.getHospitalDirectory().createHospital(hospName, hospEmployeeName, address, ua, vaccineType);
 
             
 
@@ -311,7 +328,6 @@ public class ManageHospitalsJPanel extends javax.swing.JPanel {
 
     private void cbxRoleActionPerformedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxRoleActionPerformedActionPerformed
         // TODO add your handling code here:
-        populateComboBox();
     }//GEN-LAST:event_cbxRoleActionPerformedActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -339,7 +355,7 @@ public class ManageHospitalsJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         int selectedRow = hospJTable.getSelectedRow();
         if(selectedRow >= 0){
-            Hospital h = (Hospital) hospJTable.getValueAt(selectedRow, 0);
+            Hospital h = (Hospital) hospJTable.getValueAt(selectedRow, 1);
             ecoSystem.getHospitalDirectory().deleteHospital(h);
             JOptionPane.showMessageDialog(null, "Hospital removed successfully.");
             populateTable();
@@ -360,6 +376,7 @@ public class ManageHospitalsJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cbxRoleActionPerformed;
+    private javax.swing.JComboBox<String> cbxVaccineType;
     private javax.swing.JTable hospJTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -368,6 +385,7 @@ public class ManageHospitalsJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPasswordField jPasswordField;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtHospAddress;
@@ -399,6 +417,13 @@ public class ManageHospitalsJPanel extends javax.swing.JPanel {
             model.addRow(row);
         }
         
+    }
+
+    private void populateVaccineComboBox() {
+        cbxVaccineType.removeAllItems();
+        cbxVaccineType.addItem(VaccineType.Pfizer.getValue());
+        cbxVaccineType.addItem(VaccineType.Moderna.getValue());
+        cbxVaccineType.addItem(VaccineType.JohnsonNJohnson.getValue());
     }
     
     

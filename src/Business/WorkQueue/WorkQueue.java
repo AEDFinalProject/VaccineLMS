@@ -22,9 +22,17 @@ public class WorkQueue {
         return workRequestList;
     }
     
+    public void removeWorkRequest(WorkRequest br){
+        workRequestList.remove(br);
+    }
     
+    
+    public void addWorkRequest(AlertShortage al) {
+//        if (!workRequestList.contains(book)) //Add only if the WR doesnt exist
+            workRequestList.add(al);
+    }
 
-    public void addWorkRequest(BookingRequest book) {
+    public void addWorkRequest(WorkRequest book) {
 //        if (!workRequestList.contains(book)) //Add only if the WR doesnt exist
             workRequestList.add(book);
     }

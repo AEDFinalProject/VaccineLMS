@@ -5,12 +5,22 @@
  */
 package userinterface.SystemAdminWorkArea;
 
-import Business.Customer.Patient;
+import Business.Patient.Patient;
 import Business.EcoSystem;
 import Business.Employee.Employee;
-import Business.Role.CustomerRole;
+import Business.Role.PatientRole;
 import Business.Role.Role;
 import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
+import java.awt.Component;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import Business.EcoSystem;
+import Business.Employee.Employee;
+import Business.Role.Role;
+import Business.UserAccount.UserAccount;
+import Business.Vaccine.VaccineProduct;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JOptionPane;
@@ -36,6 +46,7 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
         this.system= system;
         populateComboBox();
         populateTable();
+        populateVaccineTypeCBX();
     }
 
     /**
@@ -55,7 +66,6 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jPatientIDTextField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jVaccineTypeTextField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jUserNameTextField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -67,6 +77,7 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         btnRefresh = new javax.swing.JButton();
+        cbxVaccineType = new javax.swing.JComboBox<>();
 
         btnBack.setText("<-- Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -137,6 +148,13 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
             }
         });
 
+        cbxVaccineType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxVaccineType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxVaccineTypeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -147,7 +165,6 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(135, 135, 135)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel2)
@@ -156,7 +173,7 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel3)
                                     .addGap(18, 18, 18)
-                                    .addComponent(jVaccineTypeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cbxVaccineType, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel4)
                                     .addGap(18, 18, 18)
@@ -165,28 +182,27 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
                                     .addComponent(jLabel5)
                                     .addGap(18, 18, 18)
                                     .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(57, 57, 57)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(jLabel6)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jPatientNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnCreate)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnUpdate)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSave)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDelete)))
-                        .addGap(131, 131, 131))
+                                        .addComponent(jLabel1))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jPatientNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(btnCreate)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnUpdate)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnSave)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnDelete)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnBack)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 843, Short.MAX_VALUE)
                         .addComponent(btnRefresh))))
         );
 
@@ -195,16 +211,20 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnBack)
+                            .addComponent(btnRefresh))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(30, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBack)
-                    .addComponent(btnRefresh))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -216,7 +236,7 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jVaccineTypeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxVaccineType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -225,13 +245,13 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(btnCreate)
                     .addComponent(btnUpdate)
                     .addComponent(btnSave)
                     .addComponent(btnDelete))
-                .addContainerGap())
+                .addGap(12, 12, 12))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -243,11 +263,6 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         userProcessContainer.remove(this);
-        Component[] componentArray = userProcessContainer.getComponents();
-        Component component = componentArray[componentArray.length - 1];
-        SystemAdminWorkAreaJPanel sysAdminwjp = (SystemAdminWorkAreaJPanel) component;
-        sysAdminwjp.populateTree();
-
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
@@ -258,12 +273,12 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
         String patientName = jPatientNameTextField.getText();
         String password = jPasswordField.getText();
         String username = jUserNameTextField.getText();
-        String vaccineReq = jVaccineTypeTextField.getText();
+        String vaccineReq = (String) cbxVaccineType.getSelectedItem();
              
           
         Employee employee = system.getEmployeeDirectory().createEmployee(patientName);
         
-        UserAccount ua = system.getUserAccountDirectory().createUserAccount(username, password, employee, new CustomerRole());
+        UserAccount ua = system.getUserAccountDirectory().createUserAccount(username, password, employee, new PatientRole());
                 
         Patient patient = system.getPatientDirectory().createPatient(patientName, patientID, ua, vaccineReq);
 
@@ -273,7 +288,7 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
         jPatientNameTextField.setText("");
         jPasswordField.setText("");
         jUserNameTextField.setText("");
-        jVaccineTypeTextField.setText("");
+        
         populateTable();
         JOptionPane.showMessageDialog(null, "Patient Created");
     }//GEN-LAST:event_btnCreateActionPerformed
@@ -289,12 +304,10 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
             jPatientIDTextField.setText(String.valueOf(p.getId()));
             jUserNameTextField.setText(p.getUa().getUsername());
             jPasswordField.setText(p.getUa().getPassword());
-            jVaccineTypeTextField.setText(p.getVaccineType());
         }else{
             JOptionPane.showMessageDialog(null, "Please select a row");
         }
         jPatientNameTextField.getText();
-        jVaccineTypeTextField.getText();
         jPatientIDTextField.getText();
         jUserNameTextField.getText();
     }//GEN-LAST:event_btnUpdateActionPerformed
@@ -315,6 +328,11 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void cbxVaccineTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxVaccineTypeActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_cbxVaccineTypeActionPerformed
 
     private void populateComboBox() {
         jComboBox1.removeAllItems();
@@ -349,6 +367,7 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> cbxVaccineType;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -361,7 +380,14 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField jPatientNameTextField;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jUserNameTextField;
-    private javax.swing.JTextField jVaccineTypeTextField;
     private javax.swing.JTable patientTable;
     // End of variables declaration//GEN-END:variables
+
+    private void populateVaccineTypeCBX() {
+        cbxVaccineType.removeAllItems();
+        cbxVaccineType.addItem(VaccineProduct.VaccineType.Pfizer.getValue());
+        cbxVaccineType.addItem(VaccineProduct.VaccineType.Moderna.getValue());
+        cbxVaccineType.addItem(VaccineProduct.VaccineType.JohnsonNJohnson.getValue());    
+    }
+    
 }

@@ -4,7 +4,7 @@
  */
 package Business.UserAccount;
 
-import Business.Customer.Patient;
+import Business.Patient.Patient;
 import Business.Employee.Employee;
 import Business.Hospital.Hospital;
 import Business.Role.Role;

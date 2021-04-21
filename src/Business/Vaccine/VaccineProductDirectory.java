@@ -7,6 +7,7 @@ package Business.Vaccine;
 
 import Business.Vaccine.VaccineProduct.VaccineType;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -18,6 +19,14 @@ public class VaccineProductDirectory {
     public VaccineProductDirectory(){
         vaccineProductList = new ArrayList();
     }
+
+    public VaccineProductDirectory(VaccineProductDirectory vaccDirectory) {
+        
+    }
+
+    
+    
+    
 
     public ArrayList<VaccineProduct> getVaccineProductList() {
         return vaccineProductList;
@@ -40,12 +49,22 @@ public class VaccineProductDirectory {
     }
     
     public void removeVaccineProduct(VaccineProduct vacc){
-        for(VaccineProduct v : vaccineProductList){
-            if(v.equals(vacc)){
-                vaccineProductList.remove(v);
+        
+//        Iterator<VaccineProduct> itr = vaccineProductList.iterator();
+//            while(itr.hasNext()){
+//                if(vacc.equals(itr.next())){
+//                    vaccineProductList.remove(vacc);
+//                }
+//            }
+            for(int i = 0; i < vaccineProductList.size(); i++){
+                if(vacc.equals(vaccineProductList.get(i))){
+                    vaccineProductList.remove(vacc);
+                }
             }
+
         }
-    }
+
+        
 
     @Override
     public String toString() {

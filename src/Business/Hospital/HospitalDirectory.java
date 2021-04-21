@@ -6,6 +6,7 @@
 package Business.Hospital;
 
 import Business.UserAccount.UserAccount;
+import Business.Vaccine.VaccineProduct.VaccineType;
 import java.util.ArrayList;
 
 /**
@@ -23,23 +24,16 @@ public class HospitalDirectory {
         return hospitalList;
     }
     
-    public Hospital createHospital(String name, String empName, String address, UserAccount ua){
+    public Hospital createHospital(String name, String empName, String address, UserAccount ua, String type){
         Hospital hospital = new Hospital();
         hospital.setHospitalName(name);
         hospital.setAddress(address);
         hospital.setHospEmpName(empName);
         hospital.setUserAccount(ua);
+        hospital.setType(VaccineType.valueOf(type));
         hospitalList.add(hospital);
         return hospital;
     }
-
-//    public Hospital createHospital(String name, String address) {
-//        Hospital hospital = new Hospital();
-//        hospital.setHospitalName(name);
-//        hospital.setAddress(address);
-//        hospitalList.add(hospital);
-//        return hospital;
-//    }
 
     public void deleteHospital(Hospital h) {
         hospitalList.remove(h);

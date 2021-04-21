@@ -4,7 +4,7 @@
  */
 package Business;
 
-import Business.Customer.PatientDirectory;
+import Business.Patient.PatientDirectory;
 import Business.Employee.EmployeeDirectory;
 import Business.Hospital.HospitalDirectory;
 import Business.Role.Role;

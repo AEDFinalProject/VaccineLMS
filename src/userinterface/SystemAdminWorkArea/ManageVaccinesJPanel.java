@@ -11,6 +11,7 @@ import Business.Role.Role;
 import Business.UserAccount.UserAccount;
 import Business.Vaccine.VaccineProduct;
 import Business.Vaccine.VaccineProduct.VaccineType;
+import Business.Vaccine.VaccineProductDirectory;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JOptionPane;
@@ -26,6 +27,7 @@ public class ManageVaccinesJPanel extends javax.swing.JPanel {
     UserAccount userAccount;
     EcoSystem system;
     VaccineProduct vaccine;
+    VaccineProductDirectory vaccineDirectory;
     
     /**
      * Creates new form ManageVaccinesJPanel
@@ -49,8 +51,8 @@ public class ManageVaccinesJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
+        refreshButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -59,22 +61,34 @@ public class ManageVaccinesJPanel extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
 
-        jButton1.setText("<- Back");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        backButton.setText("<- Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Refresh");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        refreshButton.setText("Refresh");
+        refreshButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                refreshButtonActionPerformed(evt);
             }
         });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
                 {null, null, null},
                 {null, null, null},
                 {null, null, null},
@@ -118,9 +132,9 @@ public class ManageVaccinesJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton1)
+                        .addComponent(backButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2))
+                        .addComponent(refreshButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(100, 100, 100)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,8 +158,8 @@ public class ManageVaccinesJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
+                    .addComponent(refreshButton)
+                    .addComponent(backButton))
                 .addGap(24, 24, 24)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,42 +184,41 @@ public class ManageVaccinesJPanel extends javax.swing.JPanel {
         
         String selectedVaccineType = (String) jComboBox1.getSelectedItem();
         VaccineType vaxType = VaccineType.valueOf(selectedVaccineType);
-        vaccine = selectedHospital.getVaccineDirectory().createVaccineProduct(vaxType);
+        if(selectedHospital.getType().equals(vaxType)){
+            selectedHospital.getVaccineDirectory().createVaccineProduct(vaxType);
+        }else{
+            JOptionPane.showMessageDialog(null, "This Hospital Will Not Administer This Vaccine.");
+        }
         
         populateVaccineTable();
         populateHospitalTable();
-        JOptionPane.showMessageDialog(null, "Patient Created");
+        JOptionPane.showMessageDialog(null, "Vaccine Created");
     }//GEN-LAST:event_btnCreateVaccineActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         // TODO add your handling code here:
         populateVaccineTable();
         populateHospitalTable();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_refreshButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
         userProcessContainer.remove(this);
-        Component[] componentArray = userProcessContainer.getComponents();
-        Component component = componentArray[componentArray.length - 1];
-        SystemAdminWorkAreaJPanel sysAdminwjp = (SystemAdminWorkAreaJPanel) component;
-        sysAdminwjp.populateTree();
-
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.previous(userProcessContainer);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_backButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backButton;
     private javax.swing.JButton btnCreateVaccine;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JButton refreshButton;
     // End of variables declaration//GEN-END:variables
 
     private void populateComboBox() {
@@ -245,7 +258,7 @@ public class ManageVaccinesJPanel extends javax.swing.JPanel {
         for(Hospital h : system.getHospitalDirectory().getHospitalList()){
             Object[] row = new Object[2];
             row[0] = h;
-            if(h.getVaccineDirectory().getVaccineProductList() == null){
+            if((h.getVaccineDirectory().getVaccineProductList()) == null){
                 row[1] = 0;
             }else{
                 row[1] = h.getVaccineDirectory().getVaccineProductList().size();
