@@ -13,6 +13,8 @@ import Business.Role.Role;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -95,6 +97,12 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
         jLabel3.setText("Vaccine Type Required:");
 
         jLabel4.setText("Username:");
+
+        jUserNameTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jUserNameTextFieldActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Password:");
 
@@ -255,13 +263,40 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
         String patientID = jPatientIDTextField.getText();
-        String patientName = jPatientNameTextField.getText();
+        String regex = "^([a-zA-Z]{2,}\\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]{1,})?)";
+        
         String password = jPasswordField.getText();
-        String username = jUserNameTextField.getText();
         String vaccineReq = jVaccineTypeTextField.getText();
-             
-          
-        Employee employee = system.getEmployeeDirectory().createEmployee(patientName);
+        ArrayList<String> userNameList = new ArrayList<String>();
+        Iterator<Patient> itr = system.getPatientDirectory().getPatientList().iterator();
+        while(itr.hasNext()){
+            userNameList.add(itr.next().getUa().getUsername());
+        }
+        
+        if(jUserNameTextField.getText().length()<5){
+            JOptionPane.showMessageDialog(null,"Username too short","Alert Message",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        else if(jUserNameTextField.getText().length()>10){
+            JOptionPane.showMessageDialog(null,"Username too short","Alert Message",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        else if(userNameList.contains(jUserNameTextField.getText())){
+            JOptionPane.showMessageDialog(null,"Sorry! Username is taken","Alert Message",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        else if(!jPatientNameTextField.getText().matches("regex")){
+            JOptionPane.showMessageDialog(null,"Please Enter a Valid Name","Alert Message",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        else{
+            
+                String username = jUserNameTextField.getText();
+                String patientName = jPatientNameTextField.getText();
+            
+            Employee employee = system.getEmployeeDirectory().createEmployee(patientName);
         
         UserAccount ua = system.getUserAccountDirectory().createUserAccount(username, password, employee, new CustomerRole());
                 
@@ -273,7 +308,19 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
         jPatientNameTextField.setText("");
         jPasswordField.setText("");
         jUserNameTextField.setText("");
-        jVaccineTypeTextField.setText("");
+        }
+        
+        
+        
+        
+             
+          
+        
+  
+        
+        
+        
+        
         populateTable();
         JOptionPane.showMessageDialog(null, "Patient Created");
     }//GEN-LAST:event_btnCreateActionPerformed
@@ -315,6 +362,11 @@ public class ManagePatientsJPanel extends javax.swing.JPanel {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jUserNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jUserNameTextFieldActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jUserNameTextFieldActionPerformed
 
     private void populateComboBox() {
         jComboBox1.removeAllItems();
